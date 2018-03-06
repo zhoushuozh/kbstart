@@ -7,11 +7,10 @@ var keys={
 var site={
 	'q': 'qq.com', 
 	'w': 'weibo.com', 
-	'e': 'ele.me', 
-	'r': 'renren.com', 
+	'e': 'www.ele.me', 
 	't': 'taobao.com', 
 	'y': 'youtube.com', 
-	'u': 'uc.com', 
+	'u': 'uc.cn', 
 	'i': 'iqiyi.com', 
 	'o': 'opera.com', 
 	'a': 'acfun.cn', 
@@ -19,7 +18,7 @@ var site={
 	'd': 'douban.com',
 	'g': 'github.com',
 	'h': 'huaban.com',
-	'j': 'jd.com',
+	'j': 'www.jd.com',
 	'z': 'zhihu.com',
 	'x': 'xiedaimala.com',
 	'c': 'codepen.io',
@@ -29,33 +28,72 @@ var site={
 	'm': 'imooc.com'
 }
 
-function createKeyboard() {
-	var keyLen = Object.keys(keys).length;
+var siteInLocalStorage = JSON.parse(localStorage.getItem('website'));
 
-	for(var i=0; i<keyLen; i++){
-		// 创建三个div
-		var div = document.createElement('div');
-		div.className = 'row';
-		main.appendChild(div);
+if(siteInLocalStorage){
+	site = siteInLocalStorage;
+}
 
-		// 创建kbd
-		var row = keys[i];
-		var rowLen = Object.keys(keys[i]).length;
-		for(var j=0;j<rowLen;j++){
-			var kbd = document.createElement('kbd');
-			var span = document.createElement('span');
-			span.textContent = row[j];
-			kbd.appendChild(span);
-			kbd.className = 'key';
-			div.appendChild(kbd);
+var keyLen = Object.keys(keys).length;
+
+for(var i=0; i<keyLen; i++){
+	// 创建三个div
+	var div = document.createElement('div');
+	div.className = 'row';
+	keyboard.appendChild(div);
+
+	// 创建kbd
+	var row = keys[i];
+	var rowLen = Object.keys(keys[i]).length;
+	for(var j=0;j<rowLen;j++){
+		var kbd = document.createElement('kbd');
+		var imgBox = document.createElement('div');
+		var button = document.createElement('button');
+		var img = document.createElement('img');
+
+		if(site[row[j]]){
+			img.src = 'http://'+site[row[j]]+'/favicon.ico';
+		}else{
+			img.src = 'http://p4ceeqep9.bkt.clouddn.com/favicon.png';
 		}
+
+		img.onerror = function(e){
+			e.target.src = 'http://p4ceeqep9.bkt.clouddn.com/favicon.png';
+		}
+
+		button.textContent = '编辑';
+		button.id = row[j];
+
+		button.onclick = function(e){
+			var btnId = e['target']['id'];
+			// console.log(btnId);
+			var img2 = this.previousSibling.childNodes;
+			var dialogText = prompt('请输入一个网址');
+			
+			site[btnId] = dialogText;
+			img2.src = 'http://'+dialogText+'/favicon.ico';
+			img2.onerror = function(e){
+				e.target.src = 'http://p4ceeqep9.bkt.clouddn.com/favicon.png'
+			}
+			localStorage.setItem('website',JSON.stringify(site));
+		}
+
+		kbd.textContent = row[j];
+		kbd.className = 'key';
+		imgBox.className = 'img-box';
+		imgBox.appendChild(img);
+		kbd.appendChild(imgBox);
+		kbd.appendChild(button);
+		div.appendChild(kbd);
 	}
 }
 
-createKeyboard();
 
 document.onkeypress = function(e){
 	var key= e['key'];
 	var website = site[key];
-	window.open('http://'+website,'_blank');
+	if(website){
+		window.open('http://'+website,'_blank');
+	}
 }
+
