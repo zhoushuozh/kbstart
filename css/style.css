@@ -14,10 +14,6 @@ body{background: #fff;}
     align-items: center;
     height: 100vh;
 }
-#keyboard{
-	width: 842px;
-	padding-left: 12px;
-}
 
 #keyboard .row:after{
 	content:" "; 

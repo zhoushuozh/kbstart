@@ -12,19 +12,12 @@ var site={
 	'y': 'youtube.com', 
 	'u': 'uc.cn', 
 	'i': 'iqiyi.com', 
-	'o': 'opera.com', 
 	'a': 'acfun.cn', 
 	's': 'segmentfault.com',
 	'd': 'douban.com',
-	'g': 'github.com',
 	'h': 'huaban.com',
 	'j': 'www.jd.com',
 	'z': 'zhihu.com',
-	'x': 'xiedaimala.com',
-	'c': 'codepen.io',
-	'v': 'v2ex.com', 
-	'b': 'baidu.com',
-	'n': 'nodejs.org',
 	'm': 'imooc.com'
 }
 
@@ -69,7 +62,7 @@ for(var i=0; i<keyLen; i++){
 			// console.log(btnId);
 			var img2 = this.previousSibling.childNodes;
 			var dialogText = prompt('请输入一个网址');
-			
+
 			site[btnId] = dialogText;
 			img2.src = 'http://'+dialogText+'/favicon.ico';
 			img2.onerror = function(e){
@@ -96,4 +89,3 @@ document.onkeypress = function(e){
 		window.open('http://'+website,'_blank');
 	}
 }
-
