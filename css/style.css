@@ -10,6 +10,7 @@ body{background: #fff;}
 
 #main{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -24,11 +25,11 @@ body{background: #fff;}
 }
 
 #keyboard .row:nth-child(2){
-	margin-left: 36px;
+	padding-left: 36px;
 }
 
 #keyboard .row:nth-child(3){
-	margin-left: 119px;
+	padding-left: 119px;
 }
 
 #keyboard .row .key{
@@ -50,6 +51,7 @@ body{background: #fff;}
     cursor: pointer;
 }
 
+#keyboard .row .key.active,
 #keyboard .row .key:active{
     top: 2px;
     box-shadow: 2px 0 2px rgba(0, 0, 0, 0.5);
@@ -98,3 +100,185 @@ body{background: #fff;}
     max-height: 100%;
 }
 
+#search{
+    display: flex;
+    width: 100%;
+    height: 160px;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: -10vh;
+}
+
+#search .search-input-out{
+    position: relative;
+    overflow: visible;
+    width: 500px;
+    height: 50px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: white;
+    transition: 0.3s
+}
+
+#search .search-input-out.active{
+    border-color: #00ce6d;
+}
+
+#search .search-input-out #search-input{
+    font-size: 16px;
+    font-weight: 300;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 11px 20px 11px 74px;
+    padding-right: 20px;
+    color: #999;
+    border: none;
+    border-radius: 3px;
+    outline: 0;
+}
+
+#search .search-input-out .search-button{
+    position: absolute;
+    top: 0;
+    right: -2px;
+    width: 60px;
+    height: 100%;
+    cursor: pointer;
+    transition: all ease .4s;
+    border: none;
+    border-radius: 0 3px 3px 0;
+    outline: 0;
+    background-color: #00ce6d;
+    background-image: url(../images/search.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+
+#search .search-input-out .search-choice{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 60px;
+    height: 100%;
+    cursor: pointer;
+    border-radius: 3px 0 0 3px;
+    align-items: center;
+    justify-content: center;
+}
+
+#search .search-input-out .search-choice:hover{
+    background-color: #f3f3f3;
+}
+
+#search .search-input-out .search-choice img{
+    height: 28px;
+    margin-left: -10px;
+}
+
+#search .search-input-out .search-choice:after{
+    content: ' ';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 45px;
+    margin-top: -2px;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-top-color: #ccc;
+}
+
+#search .search-input-out .search-select-box{
+    position: fixed;
+    z-index: 500;
+    display: flex;
+    overflow: hidden;
+    width: 500px;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 3px;
+    background-color: #fff;
+    flex-wrap: wrap;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(30px);
+    transition: 0.3s all;
+}
+
+#search .search-input-out .search-select-box.active{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0)
+}
+
+#search .search-input-out .search-select-box .search-item{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: calc((100% / 5));
+    height: 120px;
+    cursor: pointer;
+    transition: all ease .2s;
+    box-shadow: 0 1px 0 #f3f3f3, -1px 0 0 #f3f3f3;
+    align-items: center;
+    justify-content: center;
+    transition:0.3s;
+}
+
+#search .search-input-out .search-select-box .search-item:hover{
+    background-color: #f3f3f3;
+}
+
+#search .search-input-out .search-select-box .search-item img{
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+#search .search-input-out .search-select-box .search-item .search-item-name{
+    font-size: 16px;
+    font-weight: 300;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    text-align: center;
+    white-space: nowrap;
+    letter-spacing: 1px;
+    text-overflow: ellipsis;
+    color: #999;
+}
+
+#search .search-input-out .search-cover{
+    position: fixed;
+    z-index: 130;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.3);
+}
+
+#search .search-input-out .search-cover.active{
+    display: block;
+}
+
+#footer{
+    position: absolute;
+    width: 100%;
+    color: #999;
+    text-align: center;
+    line-height: 3em;
+    left: 0;
+    bottom: 0;
+}
+
+#footer a{
+    color: #999;
+}

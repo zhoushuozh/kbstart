@@ -1,7 +1,15 @@
 // 1.初始化数据
-var hash = init()
-var keys = hash['keys']
-var sites = hash['sites']
+var hash = init(),
+	keys = hash['keys'],
+	sites = hash['sites'],
+	main = document.querySelector('#main'),
+	searchInput = main.querySelector('#search-input'),
+	searchChoice = main.querySelector('.search-choice'),
+	searchBtn = main.querySelector('.search-button'),
+	searchCover = main.querySelector('.search-cover'),
+	searchSelector = main.querySelector('.search-select-box'),
+	searchItem = searchSelector.querySelectorAll('.search-item'),
+	hasFocus = false
 
 // 2.生成键盘 遍历 keys，生成 kbd 标签
 generateKeyboard(keys,sites)
@@ -17,12 +25,10 @@ function init(){
 	}
 
 	var sites={
+		'3': '360.com',
 		'q': 'qq.com', 
 		'w': 'weibo.com', 
-		'e': 'www.ele.me', 
 		't': 'taobao.com', 
-		'y': 'youtube.com', 
-		'u': 'uc.cn', 
 		'i': 'iqiyi.com', 
 		'a': 'acfun.cn', 
 		's': 'segmentfault.com',
@@ -30,6 +36,7 @@ function init(){
 		'h': 'huaban.com',
 		'j': 'www.jd.com',
 		'z': 'zhihu.com',
+		'b': 'bilibili.com',
 		'm': 'imooc.com'
 	}
 
@@ -45,22 +52,25 @@ function init(){
 	}
 }
 
-function createButton(id){
+function createButton(id,domain){
 	var button = document.createElement('button');
 	button.textContent = '编辑';
 	button.id = id;
 
 	button.onclick = function(e){
+		e.stopPropagation();
 
 		var btnId = e['target']['id'];
 		// console.log(btnId);
 		var img2 = this.previousSibling.childNodes[0];
-		var dialogText = prompt('请输入一个网址');
-
+		var dialogText = prompt('请输入一个网址',domain);
+		if(dialogText === null || dialogText === 'null'){
+			return false
+		}
 		sites[btnId] = dialogText;
 		img2.src = 'http://'+dialogText+'/favicon.ico';
 		img2.onerror = function(e){
-			e.target.src = 'http://p4ceeqep9.bkt.clouddn.com/favicon.png'
+			e.target.src = 'https://blog.zhoushuo.me/keyboard-keyico.png'
 		}
 		localStorage.setItem('website',JSON.stringify(sites));
 	}
@@ -74,14 +84,14 @@ function createImg(domain){
 	imgBox.className = 'img-box';
 	imgBox.appendChild(img);
 
-	if(domain){
+	if(domain && domain !== 'null'){
 		img.src = 'http://'+domain+'/favicon.ico';
 	}else{
-		img.src = 'http://p4ceeqep9.bkt.clouddn.com/favicon.png';
+		img.src = 'https://blog.zhoushuo.me/keyboard-keyicon.png';
 	}
 
 	img.onerror = function(e){
-		e.target.src = 'http://p4ceeqep9.bkt.clouddn.com/favicon.png';
+		e.target.src = 'https://blog.zhoushuo.me/keyboard-keyicon.png';
 	}
 
 	return imgBox
@@ -101,7 +111,7 @@ function generateKeyboard(keys,sites){
 		var rowLen = Object.keys(keys[i]).length;
 		for(var j=0;j<rowLen;j++){
 			var kbd = document.createElement('kbd');
-			var button = createButton(row[j]);
+			var button = createButton(row[j],sites[row[j]]);
 			var imgBox = createImg(sites[row[j]]);
 
 			kbd.textContent = row[j];
@@ -113,14 +123,89 @@ function generateKeyboard(keys,sites){
 	}
 }
 
+searchInput.onfocus = function(){
+	hasFocus = true;
+	document.querySelector('.search-input-out').classList.add('active')
+}
+
+searchInput.onblur = function(){
+	hasFocus = false;
+	document.querySelector('.search-input-out').classList.remove('active')
+}
+
 function listenToUser(sites){
+	var buttons = main.querySelectorAll('#keyboard .key');
+
 	document.onkeypress = function(e){
 		var key= e['key'];
-		var website = sites[key];
-		if(website){
-			window.open('http://'+website,'_blank');
+		if(document.getElementById(key)){
+			document.getElementById(key).parentNode.classList.add('active');
+		}
+		if(hasFocus === false){
+			var website = sites[key];
+			if(website) window.open('http://'+website,'_blank')
+		}
+
+		if(e.keyCode === 13 && hasFocus === true) search()
+	}
+	document.onkeyup = function(e){
+		var key= e['key'];
+		if(document.getElementById(key)){
+			document.getElementById(key).parentNode.classList.remove('active');
+		}
+	}
+
+	for(let i = 0; i < buttons.length; i++){
+		buttons[i].onclick = function(){
+			console.log(this);
+			var key = this.getElementsByTagName("button")[0].id;
+			var website = sites[key];
+			if(website) window.open('http://'+website,'_blank')
 		}
 	}
 }
 
+/*------------------search--------------------*/
+
+searchChoice.addEventListener('click',showSearch)
+searchCover.addEventListener('click',hideSearch)
+searchBtn.addEventListener('click', search)
+
+
+var searchUrls = {
+	baidu: 'http://www.baidu.com/s?wd=',
+	google: 'http://www.google.com.hk/search?&q=',
+	bing: 'https://cn.bing.com/search?q=123',
+	360: 'https://www.so.com/s?&q=',
+	sougou: 'https://www.sogou.com/web?query='
+}
+
+var searchEngine = ['baidu', 'google', 'bing', '360', 'sougou'];
+
+var searchUrl = searchUrls[searchEngine[0]];
+
+for(var i=0;i<searchItem.length;i++){
+	searchItem[i].index = i;
+	searchItem[i].addEventListener('click',function(e){
+		hideSearch();
+		searchChoice.querySelector('img').src = 'images/'+searchEngine[this.index]+'.png';
+		searchUrl = searchUrls[searchEngine[this.index]];
+	})
+}
+
+
+function showSearch(){
+	searchCover.classList.add('active');
+	searchSelector.classList.add('active')
+}
+
+function hideSearch(){
+	searchCover.classList.remove('active');
+	searchSelector.classList.remove('active')
+}
+
+function search(){
+	var inputValue = searchInput.value.replace(/(^\s*)|(\s*$)/g, "");
+	if(inputValue) window.open(searchUrl+inputValue,'_blank')
+}
 

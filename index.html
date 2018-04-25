@@ -2,15 +2,47 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>键盘导航</title>
+	<title>kbStart - 一个纯粹的导航页</title>
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="shortcut icon" href="images/favicon.ico">
 </head>
 <body>
-	<header></header>
 	<main id="main">
+		<div id="search">
+			<div class="search-input-out">
+				<input id="search-input" type="text" placeholder="输入并搜索...">
+				<button class="search-button"></button>
+				<div class="search-choice">
+					<img src="images/baidu.png" alt="">
+				</div>
+				<div class="search-cover"></div>
+				<div class="search-select-box">
+					<div class="search-item">
+						<img src="images/baidu.png" alt="">
+						<div class="search-item-name">百度</div>
+					</div>
+					<div class="search-item">
+						<img src="images/google.png" alt="">
+						<div class="search-item-name">谷歌</div>
+					</div>
+					<div class="search-item">
+						<img src="images/bing.png" alt="">
+						<div class="search-item-name">必应</div>
+					</div>
+					<div class="search-item" >
+						<img src="images/360.png" alt="">
+						<div class="search-item-name">360</div>
+					</div>
+					<div class="search-item">
+						<img src="images/sougou.png" alt="">
+						<div class="search-item-name">搜狗</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="keyboard"></div>
 	</main>
-	<footer></footer>
+	<footer id="footer">&copy; 2018 - <a href="https://zhoushuo.me">ZhouShuo</a></footer>
 </body>
 <script src="js/main.js"></script>
 </html>
