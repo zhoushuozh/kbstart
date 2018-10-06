@@ -70,7 +70,7 @@ function createButton(id,domain){
 		sites[btnId] = dialogText;
 		img2.src = 'http://'+dialogText+'/favicon.ico';
 		img2.onerror = function(e){
-			e.target.src = 'https://blog.zhoushuo.me/keyboard-keyico.png'
+			e.target.src = 'https://cdn.zhoushuo.me/keyboard-keyico.png'
 		}
 		localStorage.setItem('website',JSON.stringify(sites));
 	}
