@@ -87,11 +87,11 @@ function createImg(domain){
 	if(domain && domain !== 'null'){
 		img.src = 'http://'+domain+'/favicon.ico';
 	}else{
-		img.src = 'https://blog.zhoushuo.me/keyboard-keyicon.png';
+		img.src = 'https://cdn.zhoushuo.me/keyboard-keyicon.png';
 	}
 
 	img.onerror = function(e){
-		e.target.src = 'https://blog.zhoushuo.me/keyboard-keyicon.png';
+		e.target.src = 'https://cdn.zhoushuo.me/keyboard-keyicon.png';
 	}
 
 	return imgBox
