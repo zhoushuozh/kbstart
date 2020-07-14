@@ -70,7 +70,7 @@ function createButton(id,domain){
 		sites[btnId] = dialogText;
 		img2.src = 'http://'+dialogText+'/favicon.ico';
 		img2.onerror = function(e){
-			e.target.src = 'https://cdn.zhoushuo.me/keyboard-keyico.png'
+			e.target.src = 'https://cdn.zhoushuo.vip/keyboard-keyico.png'
 		}
 		localStorage.setItem('website',JSON.stringify(sites));
 	}
@@ -87,11 +87,11 @@ function createImg(domain){
 	if(domain && domain !== 'null'){
 		img.src = 'http://'+domain+'/favicon.ico';
 	}else{
-		img.src = 'https://cdn.zhoushuo.me/keyboard-keyicon.png';
+		img.src = 'https://cdn.zhoushuo.vip/keyboard-keyicon.png';
 	}
 
 	img.onerror = function(e){
-		e.target.src = 'https://cdn.zhoushuo.me/keyboard-keyicon.png';
+		e.target.src = 'https://cdn.zhoushuo.vip/keyboard-keyicon.png';
 	}
 
 	return imgBox
